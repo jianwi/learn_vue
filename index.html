@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="container">
+  {{ name}}
+  {{arr}}
+</div>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script src="observer.js"></script>
+<script>
+  // view model
+ let vm = new Vue({
+      el: '#container',
+      data(){
+      //    model 层
+          return {
+              name: 'djj',
+              arr: [1,2,3]
+          }
+      }
+  })
+//  vue 是响应式的，如果数据更新了，默认会刷新视图
+//  并不是所有数据都响应，如果数组使用下标更新了，不会刷新视图，改length不会刷新视图
+
+</script>
+</body>
+</html>
