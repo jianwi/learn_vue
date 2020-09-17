@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<div id="container">
+  {{ name}}
+    {{ age }}
+  {{arr}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script src="observer.js"></script>
+<script>
+  // view model
+ let vm = new Vue({
+      el: '#container',
+      data(){
+      //    model 层
+          return {
+              name: 'djj',
+              arr: [1,2,3],
+              age:{}
+          }
+      }
+  })
+//  vue 是响应式的，如果数据更新了，默认会刷新视图
+//  并不是所有数据都响应，如果数组使用下标更新了，不会刷新视图，改length不会刷新视图
+
+  // 1) vue有个特点 不会在本轮代码执行的时候 去重新渲染dom
+  // 2) 会在下一个事件环中执行 (promie.then mutationobserver setimmediate settimeout)
+
+  // 这里会等待视图更新后重新调用回调函数
+  // 视图是异步更新的
+  vm.$watch("name",function (old_value,new_value){
+      console.log("old",old_value)
+      console.log("new",new_value)
+  })
+
+  vm.name = "这里的值不会刷新视图"
+  // vm.$el 表示渲染的结果
+  console.log(vm.$el)
+  vm.name = "这个也不会"
+  vm.name = "最后一个才行"
+  // vm.$nextTick 的回调函数，会添加在 watch回调函数之后
+  vm.$nextTick(()=>{
+        console.log(vm.$el.innerHTML)
+  })
+  console.log("vm的data数据",vm.$data)
+  console.log("vm的options",vm.$options)
+// 在运行时，给一个对象添加属性，或者修改在运行时添加的对象是不会更新视图的。（因为new Vue的时候，已经把data用defineProperty重写过了，后面手动添加的却没有）
+//  vm.$set vm.$delete 动态的修改，删除属性。会让视图更新
+  vm.$set(vm.age,"small","十岁")
+  vm.$set(vm.age,"big","十一岁")
+  vm.age.bb = 12 // 这个值修改后不会触发视图更新
+//  还能改数组，触发视图更新
+  vm.$set(vm.arr,'0',100)
+
+//  vue 所有的属性
+  vm.$options
+</script>
+</body>
+</html>

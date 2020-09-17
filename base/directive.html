@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <span v-once>
+        {{ name }}
+    </span>
+    <!-- vue的中的key 有什么作用 区分元素 -->
+    <!-- 只是静态展示可以使用这个index使用唯一的key 来区分元素-->
+    <!--   不要使用 index 当 key,不然数组删除一个元素时，key 会变化，产生bug。而且之后的 key 因为 index的变化而变化，会销毁一些数据，和重新创建一些数据，影响性能 -->
+    <!-- 每次循环时候可以自己拼接一些内容保证唯一性 -->
+
+    <!--    可以用 template 元素代替 div,这样的效果是 li 不用在div 下,所有li是并列的-->
+    <template v-for="(i,index) of arr">
+        <li :key="`name_${index}`">{{ i.name }}</li>
+        <li :key="`v_${index}`">{{ i.v }}</li>
+    </template>
+<!--    v-if :dom是否显示 -->
+<!--    v-show: style是否隐藏 -->
+    <template v-if="is_show">
+        显示
+    </template>
+    <template v-else>
+        不显示
+    </template>
+<!--   v-for 和 v-if 不能用在同一个节点上, 因为v-for指令的优先级高于v-if当它们处于同一节点。
+v-for 的优先级比 v-if 更高，
+这意味着 v-if 将分别重复运行于每个 v-for 循环中-->
+<!--    v-show不能和template 一起用,因为template不在浏览器里显示,所以没办法设置style -->
+    <template v-show="!is_show">
+        显示
+    </template>
+    <!-- vue默认会采用复用的策略 会复用代码 ,所以 input 不会修改,可以加 key,表示两个不一样-->
+    <template v-if="isShow">
+        <span>你好</span>
+        <input type="text" key="1">
+    </template>
+    <template v-else>
+        <span>不好</span>
+        <input type="text" key="2">
+    </template>
+</div>
+<!--
+       v-once  // 只渲染一次，后面再修改数据，页面不渲染
+       v-html
+       v-bind
+       v-for
+       v-if / else show
+       v-model 双向绑定
+    -->
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                is_show: true,
+                name: 'djj',
+                arr: [{name: 1, v: 2}, {name:212,v:33}]
+            }
+        }
+    })
+</script>
+</body>
+</html>
