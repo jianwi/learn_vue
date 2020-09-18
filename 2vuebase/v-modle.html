@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .info{
+            background: aqua;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <fieldset>
+        <legend> 输入框 </legend>
+        <p>文本：{{ text }}</p>
+        <!--    输入框-->
+        <input type="text" v-model="text">
+        <textarea v-model="text"></textarea>
+    </fieldset>
+    <fieldset>
+        <legend>选择</legend>
+        <p>单选</p>
+        <p>{{ s_radio }}</p>
+        <input type="radio" value="男" v-model="s_radio">a选项
+        <input type="radio" value="女" v-model="s_radio">b选项
+        <p>多选</p>
+        <p>{{ checkbox }}</p>
+        <input type="checkbox" value="r" v-model="checkbox">a
+        <input type="checkbox" value="第二个" v-model="checkbox">b
+        <input type="checkbox" value="第3个" v-model="checkbox">c
+        <input type="checkbox" value="第4个" v-model="checkbox">d
+        <input type="checkbox" value="第5个" v-model="checkbox">e
+        <p>select 选则一个</p>
+        <p class="info">已选择: {{ single_select }} </p>
+        <select v-model="single_select">
+            <option value="" disabled>请选择</option>
+            <option :value="o.id" v-for="o of select_options">{{ o.value }}</option>
+        </select>
+        <p>select 选择多个</p>
+        <p class="info">已选择: {{ multi_select }}</p>
+        <select v-model="multi_select" multiple>
+            <option value="" disabled>请选择</option>
+            <option :value="o.id" v-for="o of select_options">{{ o.value }}</option>
+        </select>
+    </fieldset>
+<!--修饰符-->
+<fieldset>
+    <legend>修饰符</legend>
+    <p>{{ text }}</p>
+    <p>去掉前后空白字符</p>
+    <input v-model.trim="text">
+    <p>只能输入number</p>
+    <input v-model.number="text">
+
+</fieldset>
+
+</div>
+
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el:"#app",
+        data(){
+            return {
+                s_radio:"男",
+                text:"",
+                checkbox:[],
+                single_select: "",
+                multi_select:[],
+                select_options:[
+                    {id:1,value:"选项1"},
+                    {id:2,value:"选项2"},
+                    {id:3,value:"选项3"},
+                    {id:4,value:"选项5"},
+                    {id:5,value:"选项6"}
+                ]
+            }
+        }
+    })
+</script>
+</body>
+</html>

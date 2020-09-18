@@ -35,10 +35,22 @@ v-for 的优先级比 v-if 更高，
 这意味着 v-if 将分别重复运行于每个 v-for 循环中-->
 <!--    v-show不能和template 一起用,因为template不在浏览器里显示,所以没办法设置style -->
     <template v-show="!is_show">
-        显示
+        template 上用is_show没用，控制不了是否显示
     </template>
     <!-- vue默认会采用复用的策略 会复用代码 ,所以 input 不会修改,可以加 key,表示两个不一样-->
-    <template v-if="isShow">
+    <div>
+        <p>没写 key 的</p>
+        <template v-if="is_show">
+            <span>你好</span>
+            <input type="text">
+        </template>
+        <template v-else>
+            <span>不好</span>
+            <input type="text">
+        </template>
+    </div>
+    <p>写了key的</p>
+    <template v-if="is_show">
         <span>你好</span>
         <input type="text" key="1">
     </template>
@@ -46,6 +58,7 @@ v-for 的优先级比 v-if 更高，
         <span>不好</span>
         <input type="text" key="2">
     </template>
+    <button style="display: block" @click="is_show=!is_show">切换</button>
 </div>
 <!--
        v-once  // 只渲染一次，后面再修改数据，页面不渲染
