@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日历组件</title>
+    <style>
+        #calendar {
+            width: 150px;
+            height: 150px;
+            background: #42b983;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div v-click-outside style="border: solid 1px black">
+        <input type="text" @focus="is_show=true">
+        <div id="calendar" v-show="is_show">
+            <p>点击边框范围内，不隐藏，边框范围为隐藏</p>
+            <button>点击我</button>
+        </div>
+    </div>
+</div>
+
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                is_show: false,
+                text: '',
+                a: 1,
+            }
+        },
+        directives: {
+            clickOutside: {
+                bind: function (el, bindings, vnode) {
+                    document.addEventListener("click",function (e) {
+                        console.log(e)
+                        console.log(el.contains(e.target))
+                        if (!el.contains(e.target)){
+                            vnode.context.is_show = false
+                        }
+                    })
+                },
+                unbind: function (el,binding,vnode){
+
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

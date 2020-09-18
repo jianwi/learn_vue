@@ -9,16 +9,49 @@
 </head>
 <body>
 <div id="app">
-    <input type="text" v-model="text">
+    <input type="text" v-focus.color="color">
 </div>
 <script src="../node_modules/vue/dist/vue.js"></script>
 <script>
 <!--   指令有几部分组成 v-model.a.b.c -->
+    //全局指令所有组件都可以使用
+    //局部指令只能在当前组件使用
+/**
+ * el ：当前指令元素
+ * bindings 绑定属性
+ * vnode 虚拟节点 context 当前指令的上下文
+ */
+// 此方法默认只在绑定的时候才会执行，和更新的时候也会重新执行..只有依赖的数据发生变化，才会重新执行。
+// Vue.directive("focus",function (el,bindings,vnode){
+//     console.log(el,bindings,vnode)
+//     el.focus()
+// })
+Vue.directive("focus",{
+    bind(el,bindings,vnode){
+        console.log("绑定时运行")
+    },
+    update(el,bindings,vnode){
+        console.log("更新时运行")
+        el.focus()
+    },
+    inserted(el,bindings,vnode){
+        // 元素插入到页面时执行
+        console.log("插入后执行")
+        console.log(bindings)
+        if (bindings.modifiers.color){
+            el.style.color = bindings.value
+        }
+        el.focus()
+    }
+})
+
     let vm = new Vue({
         el:"#app",
         data(){
             return {
-                text:''
+                color:"yellow",
+                text:'',
+                a:1,
             }
         }
     })

@@ -46,7 +46,8 @@
   console.log(vm.$el)
   vm.name = "这个也不会"
   vm.name = "最后一个才行"
-  // vm.$nextTick 的回调函数，会添加在 watch回调函数之后
+  // vm.$nextTick  的回调函数，会添加在 watch回调函数之后。
+  // 在下次 DOM 更新循环结束之后执行延迟回调
   vm.$nextTick(()=>{
         console.log(vm.$el.innerHTML)
   })
