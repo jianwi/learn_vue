@@ -37,16 +37,18 @@
         directives: {
             clickOutside: {
                 bind: function (el, bindings, vnode) {
-                    document.addEventListener("click",function (e) {
+                    el.fn = function (e) {
                         console.log(e)
                         console.log(el.contains(e.target))
                         if (!el.contains(e.target)){
                             vnode.context.is_show = false
                         }
-                    })
+                    }
+                    document.addEventListener("click",el.fn)
                 },
                 unbind: function (el,binding,vnode){
-
+                    // 事件绑定必须要解绑
+                    document.removeEventListener('click',el.fn)
                 }
             }
         }

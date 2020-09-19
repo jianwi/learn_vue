@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed 和 watch 的区别</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // computed 和 watch 的区别： 两个完全不同的东西，有的时候可以相同的功能
+    // 计算 会根据其他的值来计算,会有缓存,如果依赖的值变化了,才会重新执行
+    // watch 监控某个值的变化。每次都执行回调  这两个方法都是基于 vm.$watch 的
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                name: 'djj',
+                text:21
+            }
+        },
+        computed:{
+            // computed 具有缓存,如果依赖的属性没有发生变化,不会重新执行
+            fullName()
+            {
+                console.log("调用了 computed ")
+                return this.name + "213"
+            }
+        },
+        // 当一个值变化了,可以做一件事
+        watch:{
+            name(newValue){
+                console.log("name 变化了",newValue)
+            },
+            text:{
+                handler(newValue){
+                    console.log("处理函数,变化"+newValue)
+                },
+                immediate:true,// 会立即执行
+                deep:true,// 深度监控
+                lazy:true// computed 的实现
+            }
+        }
+
+    })
+
+    // watch 就是利用 vm.$watch 实现的。
+    function initWatch(watch){
+        for (let key in watch)
+        {
+            vm.$watch(key,watch[key])
+        }
+    }
+    initWatch({
+        name:function (newValue){
+            console.log("name 变化了",newValue)
+
+        }
+
+    })
+</script>
+</body>
+</html>
