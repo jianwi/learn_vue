@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 300px;
+            height: 200px;
+            background: red;
+        }
+        .v-enter{
+            /* 进入动画 */
+            transform: scale(0,0);
+        }
+        .v-enter-active{
+            background: #cccccc;
+            transition: all 3s ease-in-out;
+        }
+        .v-enter-to{
+            transform: scale(2,2);
+        }
+        .v-leave{
+            background: aqua;
+
+        }
+        .v-leave-active{
+            transition: all 2s linear;
+        }
+        .v-leave-to{
+            background: #42b983;
+            transform: scale(0,0);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="isShow=!isShow">切换</button>
+    <transition>
+        <div class="box" v-if="isShow">
+            显示
+        </div>
+    </transition>
+</div>
+<script src="../../node_modules/vue/dist/vue.min.js"></script>
+<script>
+    <!-- VUE 中的动画 v-if v-for v-show 路由切换 -->
+   let vm = new Vue({
+           el: '#app',
+           data(){
+               return {
+                   isShow : true
+               }
+           }
+       })
+</script>
+
+</body>
+</html>
