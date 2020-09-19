@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <p>实现全选操作</p>
+    <p>当前状态： {{ checkAll ? "全选" : "未选全" }}
+        <input type="checkbox" v-model="checkAll">
+    </p>
+    <p>
+        <input type="checkbox" v-for="(check,index) of checks" :key="index" v-model="check.val">
+    </p>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                checks: [{val: true}, {val: true}, {val: true}, {val: false}, {val: false}]
+            }
+        },
+        computed: {
+            checkAll: {
+                get() {
+                    //every() 方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
+                    return this.checks.every(v => v.val === true)
+                },
+                set() {
+                    if (this.checkAll === true){
+                        this.checks.forEach(v=>v.val=false)
+                    }else {
+                        this.checks.forEach(v=>v.val=true)
+                    }
+                }
+            }
+        },
+        methods: {
+            getFullName() {
+                console.log("调用 getFullName")
+                return this.firstName + this.lastName
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -21,9 +21,6 @@
 </div>
 <script src="../node_modules/vue/dist/vue.js"></script>
 <script>
-    // computed 和 watch 的区别： 两个完全不同的东西，有的时候可以相同的功能
-    // 计算 会根据其他的值来计算,会有缓存,如果依赖的值变化了,才会重新执行
-    // watch 监控某个值的变化。每次都执行回调  这两个方法都是基于 vm.$watch 的
     let vm = new Vue({
         el: "#app",
         data() {
