@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <p>{{fullName }}</p>
+    <p>{{fullName }}</p>
+    <p>{{fullName }}</p>
+
+    <p>{{ getFullName() }}</p>
+    <p>{{ getFullName() }}</p>
+    <p>{{ getFullName() }}</p>
+<!-- 使用 method 不会缓存数据,每次依赖的值变化后,调用了多少次,method就执行多少次 -->
+<!--   然而 computed 只调用一次-->
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // computed 和 watch 的区别： 两个完全不同的东西，有的时候可以相同的功能
+    // 计算 会根据其他的值来计算,会有缓存,如果依赖的值变化了,才会重新执行
+    // watch 监控某个值的变化。每次都执行回调  这两个方法都是基于 vm.$watch 的
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                firstName: '杜',
+                lastName: '建军',
+                b:12
+            }
+        },
+        computed: {
+            // computed 具有缓存,如果依赖的属性没有发生变化,不会重新执行
+            fullName() {
+                console.log("调用了 computed-fullName ")
+                return this.firstName + this.lastName
+            }
+        },
+        methods:{
+            getFullName()
+            {
+                console.log("调用 getFullName")
+                return this.firstName + this.lastName
+            }
+        }
+    })
+</script>
+</body>
+</html>
